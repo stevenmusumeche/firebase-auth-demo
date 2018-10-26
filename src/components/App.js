@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import * as routes from "../constants/routes";
 import { Navigation } from "./Navigation";
 import { Landing } from "./Landing";
-import { SignUp } from "./SignUp";
+import { SignUpPage } from "./SignUp/SignUpPage";
 import { SignIn } from "./SignIn";
 import { PasswordForget } from "./PasswordForget";
 import { Home } from "./Home";
@@ -15,7 +15,7 @@ const App = () => (
     <div>
       <Navigation />
       <Route exact path={routes.LANDING} component={Landing} />
-      <Route exact path={routes.SIGN_UP} component={SignUp} />
+      <Route exact path={routes.SIGN_UP} component={SignUpPage} />
       <Route exact path={routes.SIGN_IN} component={SignIn} />
       <Route exact path={routes.PASSWORD_FORGET} component={PasswordForget} />
       <Route exact path={routes.HOME} component={Home} />
