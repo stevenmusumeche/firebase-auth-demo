@@ -1,76 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import * as routes from "../../constants/routes";
 import { auth } from "../../firebase";
 
-const initialState = {
-  username: "",
-  email: "",
-  passwordOne: "",
-  passwordTwo: "",
-  error: null
-};
+export const SignUpForm = ({ history }) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
+  const [error, setError] = useState(null);
 
-export class SignUpForm extends React.Component {
-  state = initialState;
-
-  handleChange = e => {
-    const stateKey = e.target.getAttribute("name");
-    this.setState({ [stateKey]: e.target.value });
-  };
-
-  onSubmit = async e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    const { username, email, passwordOne } = this.state;
-
     try {
       const authUser = await auth.signUp(username, passwordOne);
-      this.setState({ ...initialState });
-      this.props.history.push(routes.HOME);
+      resetState();
+      history.push(routes.HOME);
     } catch (error) {
-      this.setState({ error });
+      setError(error);
     }
   };
 
-  render() {
-    const isInvalid =
-      this.state.passwordOne !== this.state.passwordTwo ||
-      this.state.passwordOne === "" ||
-      this.state.email === "" ||
-      this.state.username === "";
+  const resetState = () => {
+    setUsername("");
+    setEmail("");
+    setPasswordOne("");
+    setPasswordTwo("");
+    setError(null);
+  };
 
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={this.state.username}
-          onChange={this.handleChange}
-          placeholder="Username"
-        />
-        <input
-          name="email"
-          value={this.state.email}
-          onChange={this.handleChange}
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={this.state.passwordOne}
-          onChange={this.handleChange}
-          placeholder="Password"
-          type="password"
-        />
-        <input
-          name="passwordTwo"
-          value={this.state.passwordTwo}
-          onChange={this.handleChange}
-          placeholder="Confirm Password"
-          type="password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
-        {this.state.error && <p>{this.state.error.message}</p>}
-      </form>
-    );
-  }
-}
+  const isInvalid =
+    passwordOne !== passwordTwo ||
+    passwordOne === "" ||
+    email === "" ||
+    username === "";
+
+  return (
+    <form onSubmit={onSubmit}>
+      <input
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Email Address"
+      />
+      <input
+        value={passwordOne}
+        onChange={e => setPasswordOne(e.target.value)}
+        placeholder="Password"
+        type="password"
+      />
+      <input
+        value={passwordTwo}
+        onChange={e => setPasswordTwo(e.target.value)}
+        placeholder="Confirm Password"
+        type="password"
+      />
+      <button disabled={isInvalid} type="submit">
+        Sign Up
+      </button>
+      {error && <p>{error.message}</p>}
+    </form>
+  );
+};

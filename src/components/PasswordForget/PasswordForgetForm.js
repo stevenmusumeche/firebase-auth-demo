@@ -1,28 +1,25 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase";
 import * as routes from "../../constants/routes";
+import { withRouter } from "react-router-dom";
+import { auth } from "../../firebase";
 
-export const SignInForm = ({ history }) => {
+export const PasswordForgetForm = withRouter(({ history }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const isInvalid = password === "" || email === "";
 
   const onSubmit = async e => {
     e.preventDefault();
-
     try {
-      const result = await auth.signIn(email, password);
-
+      await auth.resetPassword(email);
       setEmail("");
-      setPassword("");
       setError(null);
-
       history.push(routes.HOME);
-    } catch (error) {
+    } catch (e) {
       setError(error);
     }
   };
+
+  const isInvalid = email === "";
 
   return (
     <form onSubmit={onSubmit}>
@@ -32,18 +29,11 @@ export const SignInForm = ({ history }) => {
         onChange={e => setEmail(e.target.value)}
         placeholder="Email Address"
       />
-      <input
-        name="password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Password"
-        type="password"
-      />
       <button disabled={isInvalid} type="submit">
-        Sign In
+        Reset My Password
       </button>
 
       {error && <p>{error.message}</p>}
     </form>
   );
-};
+});
