@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import * as routes from "../../constants/routes";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
+// todo refactor to combined state
 export const SignUpForm = ({ history }) => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [passwordOne, setPasswordOne] = useState("");
   const [passwordTwo, setPasswordTwo] = useState("");
   const [error, setError] = useState(null);
@@ -12,7 +14,8 @@ export const SignUpForm = ({ history }) => {
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const authUser = await auth.signUp(username, passwordOne);
+      const authUser = await auth.signUp(email, passwordOne);
+      await db.createUser(authUser.user.uid, { email, firstName, lastName });
       resetState();
       history.push(routes.HOME);
     } catch (error) {
@@ -21,25 +24,28 @@ export const SignUpForm = ({ history }) => {
   };
 
   const resetState = () => {
-    setUsername("");
     setEmail("");
+    setFirstName("");
+    setLastName("");
     setPasswordOne("");
     setPasswordTwo("");
     setError(null);
   };
 
   const isInvalid =
-    passwordOne !== passwordTwo ||
-    passwordOne === "" ||
-    email === "" ||
-    username === "";
+    passwordOne !== passwordTwo || passwordOne === "" || email === "";
 
   return (
     <form onSubmit={onSubmit}>
       <input
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        placeholder="Username"
+        value={firstName}
+        onChange={e => setFirstName(e.target.value)}
+        placeholder="First Name"
+      />
+      <input
+        value={lastName}
+        onChange={e => setLastName(e.target.value)}
+        placeholder="Last Name"
       />
       <input
         value={email}
