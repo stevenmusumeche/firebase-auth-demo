@@ -5,5 +5,5 @@ import { NavigationNonAuth } from "./NavigationNonAuth";
 
 export const Navigation = () => {
   const authUser = useContext(AuthUserContext);
-  return authUser ? <NavigationAuth /> : <NavigationNonAuth />;
+  return <nav>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</nav>;
 };

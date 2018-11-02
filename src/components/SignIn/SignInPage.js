@@ -6,7 +6,7 @@ import { PasswordForgetLink } from "../PasswordForget/PasswordForgetLink";
 
 export const SignInPage = withRouter(({ history }) => (
   <div>
-    <h1>Sign In</h1>
+    <h1 className="title">Sign In</h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
     <SignUpLink />

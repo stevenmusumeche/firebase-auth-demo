@@ -13,7 +13,7 @@ export const Home = withAuthorization(authCondition)(() => {
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1 className="title">Home</h1>
       <p>The home page is accessible by every signed-in user.</p>
       <hr />
       <UserList users={users} />

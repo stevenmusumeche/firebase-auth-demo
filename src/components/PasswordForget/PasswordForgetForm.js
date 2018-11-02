@@ -15,25 +15,36 @@ export const PasswordForgetForm = withRouter(({ history }) => {
       setError(null);
       history.push(routes.HOME);
     } catch (e) {
-      setError(error);
+      setError(e);
     }
   };
 
   const isInvalid = email === "";
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        name="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="Email Address"
-      />
-      <button disabled={isInvalid} type="submit">
-        Reset My Password
-      </button>
-
-      {error && <p>{error.message}</p>}
-    </form>
+    <>
+      {error && (
+        <p className="has-text-danger has-text-weight-semibold error-message">
+          {error.message}
+        </p>
+      )}
+      <form onSubmit={onSubmit}>
+        <div>
+          <label className="label" htmlFor="email">
+            Email
+          </label>
+          <input
+            id="email"
+            className="input"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email Address"
+          />
+        </div>
+        <button disabled={isInvalid} className="button is-dark" type="submit">
+          Reset My Password
+        </button>
+      </form>
+    </>
   );
 });

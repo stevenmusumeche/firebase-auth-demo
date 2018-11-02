@@ -21,24 +21,45 @@ export const PasswordChangeForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        name="password1"
-        value={password1}
-        onChange={e => setPassword1(e.target.value)}
-        placeholder="New Password"
-        type="password"
-      />
-      <input
-        name="password2"
-        value={password2}
-        onChange={e => setPassword2(e.target.value)}
-        placeholder="Confirm New Password"
-        type="password"
-      />
-      <button disabled={isInvalid}>Change My Password</button>
-
-      {error && <p>{error.message}</p>}
-    </form>
+    <>
+      {error && (
+        <p className="has-text-danger has-text-weight-semibold error-message">
+          {error.message}
+        </p>
+      )}
+      <form onSubmit={onSubmit} className="password-change-form">
+        <div>
+          <label className="label" htmlFor="password1">
+            New Password
+          </label>
+          <input
+            id="password1"
+            value={password1}
+            onChange={e => setPassword1(e.target.value)}
+            placeholder="New Password"
+            type="password"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="password2">
+            Confirm New Password
+          </label>
+          <input
+            id="password2"
+            value={password2}
+            onChange={e => setPassword2(e.target.value)}
+            placeholder="Confirm New Password"
+            type="password"
+            className="input"
+          />
+        </div>
+        <div>
+          <button disabled={isInvalid} className="button is-dark">
+            Change My Password
+          </button>
+        </div>
+      </form>
+    </>
   );
 };

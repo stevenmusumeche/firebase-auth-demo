@@ -33,41 +33,88 @@ export const SignUpForm = ({ history }) => {
   };
 
   const isInvalid =
-    passwordOne !== passwordTwo || passwordOne === "" || email === "";
+    passwordOne !== passwordTwo ||
+    passwordOne === "" ||
+    email === "" ||
+    firstName === "" ||
+    lastName === "";
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        value={firstName}
-        onChange={e => setFirstName(e.target.value)}
-        placeholder="First Name"
-      />
-      <input
-        value={lastName}
-        onChange={e => setLastName(e.target.value)}
-        placeholder="Last Name"
-      />
-      <input
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="Email Address"
-      />
-      <input
-        value={passwordOne}
-        onChange={e => setPasswordOne(e.target.value)}
-        placeholder="Password"
-        type="password"
-      />
-      <input
-        value={passwordTwo}
-        onChange={e => setPasswordTwo(e.target.value)}
-        placeholder="Confirm Password"
-        type="password"
-      />
-      <button disabled={isInvalid} type="submit">
-        Sign Up
-      </button>
-      {error && <p>{error.message}</p>}
-    </form>
+    <>
+      {error && (
+        <p className="has-text-danger has-text-weight-semibold error-message">
+          {error.message}
+        </p>
+      )}
+      <form onSubmit={onSubmit} className="sign-up-form">
+        <div>
+          <label className="label" htmlFor="firstName">
+            First Name
+          </label>
+          <input
+            id="firstName"
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
+            placeholder="First Name"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="lastName">
+            Last Name
+          </label>
+          <input
+            id="lastName"
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+            placeholder="Last Name"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="email">
+            Email Address
+          </label>
+          <input
+            id="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email Address"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="password1">
+            Password
+          </label>
+          <input
+            id="password1"
+            value={passwordOne}
+            onChange={e => setPasswordOne(e.target.value)}
+            placeholder="Password"
+            type="password"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="password2">
+            Confirm Password
+          </label>
+          <input
+            id="password2"
+            value={passwordTwo}
+            onChange={e => setPasswordTwo(e.target.value)}
+            placeholder="Confirm Password"
+            type="password"
+            className="input"
+          />
+        </div>
+        <div style={{ gridColumnStart: 1 }}>
+          <button disabled={isInvalid} type="submit" className="button is-dark">
+            Sign Up
+          </button>
+        </div>
+      </form>
+    </>
   );
 };

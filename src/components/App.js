@@ -13,19 +13,20 @@ import { withAuthentication } from "./withAuthentication";
 
 const App = () => (
   <Router>
-    <div>
+    <div className="app-wrapper">
       <Navigation />
-      <hr />
-      <Route exact path={routes.LANDING} component={Landing} />
-      <Route exact path={routes.SIGN_UP} component={SignUpPage} />
-      <Route exact path={routes.SIGN_IN} component={SignInPage} />
-      <Route
-        exact
-        path={routes.PASSWORD_FORGET}
-        component={PasswordForgetPage}
-      />
-      <Route exact path={routes.HOME} component={Home} />
-      <Route exact path={routes.ACCOUNT} component={Account} />
+      <div className="app-content">
+        <Route exact path={routes.LANDING} component={Landing} />
+        <Route exact path={routes.SIGN_UP} component={SignUpPage} />
+        <Route exact path={routes.SIGN_IN} component={SignInPage} />
+        <Route
+          exact
+          path={routes.PASSWORD_FORGET}
+          component={PasswordForgetPage}
+        />
+        <Route exact path={routes.HOME} component={Home} />
+        <Route exact path={routes.ACCOUNT} component={Account} />
+      </div>
     </div>
   </Router>
 );
